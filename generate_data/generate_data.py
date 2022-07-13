@@ -3,6 +3,7 @@ import random
 from faker import Faker
 from random import randrange
 from datetime import datetime
+from helpers import upload_file
 
 number_of_entries = 25000
 
@@ -96,6 +97,8 @@ for i in range(1, 6):
         index=False
     )
 
+    upload_file(f'sessions_{i}_2022.csv', 'luis-project-business-data')
+
     events_df = pd.DataFrame(events, columns=['created_at', 'id', 'type', 'user_id'])
 
     events_df.to_csv(
@@ -104,6 +107,8 @@ for i in range(1, 6):
         index=False
     )
 
+    upload_file(f'events_{i}_2022.csv', 'luis-project-business-data')
+
     sales_df = pd.DataFrame(sales, columns=['id', 'created_at', 'product_id', 'quantity', 'user_id', 'invoice_id'])
 
     sales_df.to_csv(
@@ -111,6 +116,8 @@ for i in range(1, 6):
         header=True,
         index=False
     )
+    
+    upload_file(f'sales_{i}_2022.csv', 'luis-project-business-data')
 
     invoices_df = pd.DataFrame(invoices, columns=['id', 'created_at', 'status', 'paid_at'])
 
@@ -119,6 +126,8 @@ for i in range(1, 6):
         header=True,
         index=False
     )
+
+    upload_file(f'invoices_{i}_2022.csv', 'luis-project-business-data')
 
 
 # User data
@@ -146,6 +155,8 @@ users_df.to_csv(
     index=False
 )
 
+upload_file(f'users.csv', 'luis-project-business-data')
+
 distribution_centers = [
     'Midlands', 
     'Devon',
@@ -166,3 +177,4 @@ for i in range(1, 6):
         header=True,
         index=False
     )
+    upload_file(f'stock_{i}_2022.csv', 'luis-project-business-data')

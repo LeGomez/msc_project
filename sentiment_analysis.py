@@ -8,6 +8,7 @@ import os
 import nltk
 import re
 import string
+from generate_data.helpers import upload_file
 
 from wordcloud import WordCloud, STOPWORDS
 from PIL import Image
@@ -37,6 +38,7 @@ neutral_list = []
 positive_list = []
 negative_list = []
 
+upload_file(f'twitter_raw', 'luis-project-twitter-data')
 
 for tweet in tweets:
     tweet_list.append(tweet.text)
@@ -67,3 +69,5 @@ polarity = percentage(polarity, tweet_num)
 
 
 print(f'Positive: {positive}\nNegative: {negative}\nNeutral: {neutral}\nPolarity: {polarity}')
+
+#TODO: Add results to csv file and push to S3
