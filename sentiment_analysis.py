@@ -38,7 +38,7 @@ neutral_list = []
 positive_list = []
 negative_list = []
 
-upload_file(f'twitter_raw', 'luis-project-twitter-data')
+# upload_file(f'twitter_raw', 'luis-project-twitter-data')
 
 for tweet in tweets:
     tweet_list.append(tweet.text)
@@ -62,12 +62,10 @@ for tweet in tweets:
         neutral_list.append(tweet.text)
         neutral += 1
 
-positive = percentage(positive, tweet_num)
-negative = percentage(negative, tweet_num)
-neutral = percentage(neutral, tweet_num)
-polarity = percentage(polarity, tweet_num)
-
-
-print(f'Positive: {positive}\nNegative: {negative}\nNeutral: {neutral}\nPolarity: {polarity}')
+# positive = percentage(positive, tweet_num)
+# negative = percentage(negative, tweet_num)
+# neutral = percentage(neutral, tweet_num)
+# polarity = percentage(polarity, tweet_num)
+users_df = pd.DataFrame(tweet_num, columns=['id', 'created_at', 'status', 'paid_at'])
 
 #TODO: Add results to csv file and push to S3
