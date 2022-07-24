@@ -130,3 +130,6 @@ dmypy.json
 
 # csv files
 *.csv
+
+# terraform key credentials
+variable.tf
