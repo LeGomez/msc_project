@@ -27,7 +27,7 @@ def lambda_handler(event, context):
         index=False
     )
     
-    upload_file(f'/tmp/tweet_history.csv', 'luis-project-twitter-data')
+    upload_file(f'/tmp/tweet_history.csv', 'project-twitter-data')
     
     return {
         'statusCode': 200,

@@ -97,7 +97,7 @@ for i in range(1, 6):
         index=False
     )
 
-    upload_file(f'sessions_{i}_2022.csv', 'luis-project-business-data')
+    upload_file(f'sessions_{i}_2022.csv', 'project-business-data')
 
     events_df = pd.DataFrame(events, columns=['created_at', 'id', 'type', 'user_id'])
 
@@ -107,7 +107,7 @@ for i in range(1, 6):
         index=False
     )
 
-    upload_file(f'events_{i}_2022.csv', 'luis-project-business-data')
+    upload_file(f'events_{i}_2022.csv', 'project-business-data')
 
     sales_df = pd.DataFrame(sales, columns=['id', 'created_at', 'product_id', 'quantity', 'user_id', 'invoice_id'])
 
@@ -117,7 +117,7 @@ for i in range(1, 6):
         index=False
     )
     
-    upload_file(f'sales_{i}_2022.csv', 'luis-project-business-data')
+    upload_file(f'sales_{i}_2022.csv', 'project-business-data')
 
     invoices_df = pd.DataFrame(invoices, columns=['id', 'created_at', 'status', 'paid_at'])
 
@@ -127,7 +127,7 @@ for i in range(1, 6):
         index=False
     )
 
-    upload_file(f'invoices_{i}_2022.csv', 'luis-project-business-data')
+    upload_file(f'invoices_{i}_2022.csv', 'project-business-data')
 
 
 # User data
@@ -155,7 +155,7 @@ users_df.to_csv(
     index=False
 )
 
-upload_file(f'users.csv', 'luis-project-business-data')
+upload_file(f'users.csv', 'project-business-data')
 
 distribution_centers = [
     'Midlands', 
@@ -177,4 +177,4 @@ for i in range(1, 6):
         header=True,
         index=False
     )
-    upload_file(f'stock_{i}_2022.csv', 'luis-project-business-data')
+    upload_file(f'stock_{i}_2022.csv', 'project-business-data')
