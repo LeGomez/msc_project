@@ -89,3 +89,41 @@ resource "aws_lambda_function" "twitter_sentiment_analysis" {
 }
 
 
+resource "aws_cloudwatch_event_rule" "every_day_at_8" {
+    name = "every-day-at-8"
+    description = "Fires every day at 8 am"
+    schedule_expression = "cron(0 8 * * ? *)"
+}
+
+resource "aws_cloudwatch_event_rule" "every_day_at_9" {
+    name = "every-day-at-9"
+    description = "Fires every day at 9 am"
+    schedule_expression = "cron(0 9 * * ? *)"
+}
+
+resource "aws_cloudwatch_event_target" "pull_data_from_twitter_at_8" {
+    rule = aws_cloudwatch_event_rule.every_day_at_8.name
+    target_id = "pull_data_from_twitter"
+    arn = aws_lambda_function.pull_data_from_twitter.arn
+}
+resource "aws_lambda_permission" "allow_cloudwatch_to_call_pull_data_from_twitter" {
+    statement_id = "AllowExecutionFromCloudWatch"
+    action = "lambda:InvokeFunction"
+    function_name = aws_lambda_function.pull_data_from_twitter.function_name
+    principal = "events.amazonaws.com"
+    source_arn = aws_cloudwatch_event_rule.every_day_at_8.arn
+}
+
+resource "aws_cloudwatch_event_target" "run_sentiment_analysis_at_9" {
+    rule = aws_cloudwatch_event_rule.every_day_at_9.name
+    target_id = "twitter_sentiment_analysis"
+    arn = aws_lambda_function.twitter_sentiment_analysis.arn
+}
+resource "aws_lambda_permission" "allow_cloudwatch_to_call_twitter_sentiment_analysis" {
+    statement_id = "AllowExecutionFromCloudWatch"
+    action = "lambda:InvokeFunction"
+    function_name = aws_lambda_function.twitter_sentiment_analysis.function_name
+    principal = "events.amazonaws.com"
+    source_arn = aws_cloudwatch_event_rule.every_day_at_9.arn
+}
+
