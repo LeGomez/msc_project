@@ -68,7 +68,7 @@ resource "aws_db_instance" "project" {
     db_subnet_group_name = aws_db_subnet_group.project.name
     vpc_security_group_ids = [aws_security_group.rds.id]
     parameter_group_name = aws_db_parameter_group.project.name
-    publicly_accessible = false
+    publicly_accessible = true
     skip_final_snapshot = true
 }
 

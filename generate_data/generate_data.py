@@ -170,8 +170,8 @@ for i in range(1, 6):
             facility = center
             product_id = n
             units = fake.random_int(500, 30000)
-            stock.append([facility, product_id, units])
-    stock = pd.DataFrame(stock, columns=['facility', 'product_id', 'units'])
+            stock.append([i, facility, product_id, units])
+    stock = pd.DataFrame(stock, columns=['month', 'facility', 'product_id', 'units'])
     stock.to_csv(
         f'stock_{i}_2022.csv',
         header=True,

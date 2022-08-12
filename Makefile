@@ -9,3 +9,6 @@ twitter_data:
 
 data:
 	python generate_data/generate_data.py
+
+load_data:
+	python rds_load/lambda_function.py
