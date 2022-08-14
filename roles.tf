@@ -1,7 +1,7 @@
 data "aws_iam_policy_document" "AWSLambdaTrustPolicy" {
   statement {
-    actions    = ["sts:AssumeRole"]
-    effect     = "Allow"
+    actions = ["sts:AssumeRole"]
+    effect  = "Allow"
     principals {
       type        = "Service"
       identifiers = ["lambda.amazonaws.com"]
@@ -30,9 +30,9 @@ EOF
 }
 
 resource "aws_iam_role_policy" "twitter_data_handler_s3_access" {
-    name = "read_and_write_from_s3"
-    role = "${aws_iam_role.iam_for_lambda.name}"
-    policy = <<EOF
+  name   = "read_and_write_from_s3"
+  role   = aws_iam_role.iam_for_lambda.name
+  policy = <<EOF
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -142,8 +142,8 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "twitter_data_handler_policy_attachment" {
-    role = "${aws_iam_role.iam_for_lambda.name}"
-    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  role       = aws_iam_role.iam_for_lambda.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
 # resource "aws_iam_role_policy_attachment" "twitter_data_handler_s3" {

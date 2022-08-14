@@ -1,37 +1,36 @@
-variable "bucket_names" {
-  type    = list(string)
-  default = ["project-business-data", "project-twitter-data"]
-}
-
-variable "region" {
-  default = "eu-west-1"
-}
-
 variable "aws_access_key" {
+  default = "placeholder"
 }
 
 variable "aws_secret_key" {
+  default = "placeholder"
 }
 
 variable "TWITTER_TOKEN" {
+  default = "placeholder"
 }
 
 variable "POSTGRES_HOST" {
+  default   = "placeholder"
   sensitive = true
 }
 
 variable "POSTGRES_PORT" {
+  default   = 1111
   sensitive = true
 }
 
 variable "POSTGRES_DB" {
+  default   = "placeholder"
   sensitive = true
 }
 
 variable "db_username" {
+  default = "placeholder"
 }
 
 variable "db_password" {
   type      = string
   sensitive = true
+  default   = "placeholder"
 }
