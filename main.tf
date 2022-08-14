@@ -35,6 +35,11 @@ data "archive_file" "sentiment_analysis" {
     source_dir = "${path.module}/sentiment_analysis"
 }
 
+data "archive_file" "load_to_rds" {
+  type = "zip"
+  output_path = "${path.module}/lambda_files/load_to_rds.zip"
+  source_dir = "${path.module}/rds_load"
+}
 
 resource "aws_lambda_layer_version" "tweepy" {
   filename = "modules/tweepy.zip"
@@ -88,6 +93,37 @@ resource "aws_lambda_function" "twitter_sentiment_analysis" {
   
 }
 
+resource "aws_lambda_function" "load_data_from_s3_in_rds" {
+  depends_on = [data.archive_file.load_to_rds]
+  filename = "lambda_files/load_to_rds.zip"
+  function_name = "load_data_from_s3_in_rds"
+  role = aws_iam_role.iam_for_lambda.arn
+  handler = "lambda_function.lambda_handler"
+  source_code_hash = filebase64sha256("lambda_files/load_to_rds.zip")
+  runtime = "python3.8"
+  layers = [ 
+    aws_lambda_layer_version.tweepy.arn, 
+    "arn:aws:lambda:eu-west-1:770693421928:layer:Klayers-p38-pandas:5",
+    "arn:aws:lambda:eu-west-1:898466741470:layer:psycopg2-py38:1"
+  ]
+  memory_size = 512
+  timeout = 100
+  ephemeral_storage {
+    size = 512
+  }
+
+  environment {
+    variables = {
+      POSTGRES_HOST = "${var.POSTGRES_HOST}"
+      POSTGRES_PORT = "${var.POSTGRES_PORT}"
+      POSTGRES_DB = "${var.POSTGRES_DB}"
+      POSTGRES_USERNAME = "${var.db_username}"
+      POSTGRES_PASSWORD = "${var.db_password}"
+    }
+  }
+
+}
+
 
 resource "aws_cloudwatch_event_rule" "every_day_at_8" {
     name = "every-day-at-8"
@@ -123,6 +159,19 @@ resource "aws_lambda_permission" "allow_cloudwatch_to_call_twitter_sentiment_ana
     statement_id = "AllowExecutionFromCloudWatch"
     action = "lambda:InvokeFunction"
     function_name = aws_lambda_function.twitter_sentiment_analysis.function_name
+    principal = "events.amazonaws.com"
+    source_arn = aws_cloudwatch_event_rule.every_day_at_9.arn
+}
+
+resource "aws_cloudwatch_event_target" "run_rds_load_at_9" {
+    rule = aws_cloudwatch_event_rule.every_day_at_9.name
+    target_id = "load_data_from_s3_in_rds"
+    arn = aws_lambda_function.load_data_from_s3_in_rds.arn
+}
+resource "aws_lambda_permission" "allow_cloudwatch_to_call_load_data_from_s3_in_rds" {
+    statement_id = "AllowExecutionFromCloudWatch"
+    action = "lambda:InvokeFunction"
+    function_name = aws_lambda_function.load_data_from_s3_in_rds.function_name
     principal = "events.amazonaws.com"
     source_arn = aws_cloudwatch_event_rule.every_day_at_9.arn
 }
