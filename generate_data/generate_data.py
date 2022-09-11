@@ -1,7 +1,6 @@
 import pandas as pd
 import random
 from faker import Faker
-from random import randrange
 from datetime import datetime
 from helpers import upload_file
 
