@@ -4,7 +4,7 @@ from faker import Faker
 from datetime import datetime
 from helpers import upload_file
 
-number_of_entries = 25000
+number_of_entries = 250000
 
 link_options = [
     '/home',

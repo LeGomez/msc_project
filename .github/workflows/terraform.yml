@@ -56,6 +56,19 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check
 
+    # Updates state depending on remote status of infra
+    - name: Terraform Plan Refresh
+      run: |
+        export TF_VAR_aws_access_key=$TF_VAR_aws_access_key
+        export TF_VAR_aws_secret_key=$TF_VAR_aws_secret_key
+        export TF_VAR_DB_PASSWORD=$TF_VAR_DB_PASSWORD
+        export TF_VAR_DB_USERNAME=$TF_VAR_DB_USERNAME
+        export TF_VAR_POSTGRES_DB=$TF_VAR_POSTGRES_DB
+        export TF_VAR_POSTGRES_PORT=$TF_VAR_POSTGRES_PORT
+        export TF_VAR_POSTGRES_HOST=$TF_VAR_POSTGRES_HOST
+        export TF_VAR_TWITTER_TOKEN=$TF_VAR_TWITTER_TOKEN
+        terraform plan -input=false -refresh-only
+
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: |
