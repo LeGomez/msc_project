@@ -9,7 +9,7 @@ auth = tweepy.OAuth2BearerHandler(token)
 api = tweepy.API(auth)
 
 keyword = "@ButternutBox"
-tweet_num = 100
+tweet_num = 150000
 
 
 def lambda_handler(event, context):
