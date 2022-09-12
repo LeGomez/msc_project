@@ -42,8 +42,8 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: |
-        export TF_VAR_AWS_ACCESS_KEY=$TF_VAR_aws_access_key
-        export TF_VAR_AWS_SECRET_KEY=$TF_VAR_aws_secret_key
+        export AWS_ACCESS_KEY=$TF_VAR_aws_access_key
+        export AWS_SECRET_KEY=$TF_VAR_aws_secret_key
         export TF_VAR_DB_PASSWORD=$TF_VAR_DB_PASSWORD
         export TF_VAR_DB_USERNAME=$TF_VAR_DB_USERNAME
         export TF_VAR_POSTGRES_DB=$TF_VAR_POSTGRES_DB
@@ -59,8 +59,8 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: |
-        export TF_VAR_AWS_ACCESS_KEY=$TF_VAR_aws_access_key
-        export TF_VAR_AWS_SECRET_KEY=$TF_VAR_aws_secret_key
+        export AWS_ACCESS_KEY=$TF_VAR_aws_access_key
+        export AWS_SECRET_KEY=$TF_VAR_aws_secret_key
         export TF_VAR_DB_PASSWORD=$TF_VAR_DB_PASSWORD
         export TF_VAR_DB_USERNAME=$TF_VAR_DB_USERNAME
         export TF_VAR_POSTGRES_DB=$TF_VAR_POSTGRES_DB
@@ -73,8 +73,8 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
-        export TF_VAR_AWS_ACCESS_KEY=$TF_VAR_aws_access_key
-        export TF_VAR_AWS_SECRET_KEY=$TF_VAR_aws_secret_key
+        export AWS_ACCESS_KEY=$TF_VAR_aws_access_key
+        export AWS_SECRET_KEY=$TF_VAR_aws_secret_key
         export TF_VAR_DB_PASSWORD=$TF_VAR_DB_PASSWORD
         export TF_VAR_DB_USERNAME=$TF_VAR_DB_USERNAME
         export TF_VAR_POSTGRES_DB=$TF_VAR_POSTGRES_DB
