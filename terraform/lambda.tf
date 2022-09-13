@@ -1,19 +1,19 @@
 data "archive_file" "twitter_extract" {
   type        = "zip"
-  output_path = "${path.module}/lambda_files/twitter_extract.zip"
-  source_dir  = "${path.module}/twitter_extract"
+  output_path = "../lambda_files/twitter_extract.zip"
+  source_dir  = "../twitter_extract"
 }
 
 data "archive_file" "sentiment_analysis" {
   type        = "zip"
-  output_path = "${path.module}/lambda_files/sentiment_analysis.zip"
-  source_dir  = "${path.module}/sentiment_analysis"
+  output_path = "../lambda_files/sentiment_analysis.zip"
+  source_dir  = "../sentiment_analysis"
 }
 
 data "archive_file" "load_to_rds" {
   type        = "zip"
-  output_path = "${path.module}/lambda_files/load_to_rds.zip"
-  source_dir  = "${path.module}/rds_load"
+  output_path = "../lambda_files/load_to_rds.zip"
+  source_dir  = "../rds_load"
 }
 
 resource "aws_lambda_layer_version" "tweepy" {
@@ -28,7 +28,7 @@ resource "aws_lambda_function" "pull_data_from_twitter" {
   function_name    = "pull-data-from-twitter"
   role             = aws_iam_role.iam_for_lambda.arn
   handler          = "lambda_function.lambda_handler"
-  source_code_hash = filebase64sha256("lambda_files/twitter_extract.zip")
+  source_code_hash = filebase64sha256("../lambda_files/twitter_extract.zip")
   runtime          = "python3.9"
   layers = [
     aws_lambda_layer_version.tweepy.arn,
@@ -53,7 +53,7 @@ resource "aws_lambda_function" "twitter_sentiment_analysis" {
   function_name    = "twitter_sentiment_analysis"
   role             = aws_iam_role.iam_for_lambda.arn
   handler          = "lambda_function.lambda_handler"
-  source_code_hash = filebase64sha256("lambda_files/sentiment_analysis.zip")
+  source_code_hash = filebase64sha256("../lambda_files/sentiment_analysis.zip")
   runtime          = "python3.8"
   layers = [
     aws_lambda_layer_version.tweepy.arn,
@@ -74,7 +74,7 @@ resource "aws_lambda_function" "load_data_from_s3_in_rds" {
   function_name    = "load_data_from_s3_in_rds"
   role             = aws_iam_role.iam_for_lambda.arn
   handler          = "lambda_function.lambda_handler"
-  source_code_hash = filebase64sha256("lambda_files/load_to_rds.zip")
+  source_code_hash = filebase64sha256("../lambda_files/load_to_rds.zip")
   runtime          = "python3.8"
   layers = [
     aws_lambda_layer_version.tweepy.arn,

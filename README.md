@@ -1,23 +1,23 @@
 # Data Lake Project
 
-This repository contains code to spin up data lake infrastructure in AWS, set up lambda functions that will pull data from twitter, run sentiment analysis, and push business data from S3 buckets over to a PostgreSQL database in AWS RDS.
+This repository contains code to spin up data lake infrastructure in AWS, set up lambda functions that will pull data from twitter, run sentiment analysis, and push business data from S3 buckets over to a PostgreSQL database in AWS RDS. <br />
 
-The infrastructure is all built using Terraform. And it's automated to build on push to main branch using GitHub Actions.
+The infrastructure is all built using Terraform. And it's automated to build on push to main branch using GitHub Actions. <br />
 
 ## Setup
 
-### Environment Variables and local development setup
+### <ins>Environment Variables and local development setup</ins>
 
 After forking the repository, a few variables will have to be set through secrets manager.
 
-aws_access_key -> This is the access id to access the AWS instance where the infrastructure will be built
-aws_secret_key -> This is the access key for the AWS account
-TWITTER_TOKEN -> API Token to connect to the twitter API and pull data
-DB_USERNAME -> The username you want the master credentials to be handed to
-DB_PASSWORD -> The password for the above-mentioned username
-POSTGRES_HOST -> The host name for the RDS instance created, this will likely be project.{account_identifier}.{region}.rds.amazonaws.com
-POSTGRES_DB -> This will be the default value (postgres)
-POSTGRES_PORT -> This will be the default value (5432)
+aws_access_key -> This is the access id to access the AWS instance where the infrastructure will be built <br />
+aws_secret_key -> This is the access key for the AWS account <br />
+TWITTER_TOKEN -> API Token to connect to the twitter API and pull data <br />
+DB_USERNAME -> The username you want the master credentials to be handed to <br />
+DB_PASSWORD -> The password for the above-mentioned username <br />
+POSTGRES_HOST -> The host name for the RDS instance created, this will likely be project.{account_identifier}.{region}.rds.amazonaws.com <br />
+POSTGRES_DB -> This will be the default value (postgres) <br />
+POSTGRES_PORT -> This will be the default value (5432) <br />
 
 After cloning the repository, a .env file should be created containing the same credentials placed in the repo, following the .env.example file.
 
@@ -27,7 +27,7 @@ Now run 'make reqs' to install all requirements.
 
 if you want to run terraform locally, you can. But you will either have to export the variables like the aws_access_key into the virtual environment, or place the credentials where the variables are defined in variables.tf. Beware not to push these to the repo for security reasons.
 
-### Loading data
+### <ins>Loading data</ins>
 
 After triggering Terraform once, the infrastructure should have all been built. This means we're missing data.
 
