@@ -26,3 +26,6 @@ data:
 load_data:
 	. ./venv/bin/activate && \
 	python rds_load/lambda_function.py
+
+venv/activate:
+	. ./venv/bin/activate

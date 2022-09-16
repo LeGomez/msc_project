@@ -35,3 +35,16 @@ In order to populate the S3 buckets with fake data run the 'make data' command, 
 
 You can also run 'make twitter_data && make sentiment_analysis' to run the twitter data extraction and sentiment analysis scripts.
 
+### <ins>Executing Terraform Commands Locally </ins>
+
+This implementation was designed to run Terraform exclusively through GH Actions.
+
+It is possible, however, to run it locally for testing purposes. These steps are required: <br />
+
+- Run 'make venv/activate' command to enter the virtual environment <br />
+
+- Change working directory to the ./terraform folder <br />
+
+- Execute the following command in the terminal for each of the required environment variables: 'export <variable_name>=<variable_value>' <br />
+
+- Now you can run terraform init, plan, and apply.
