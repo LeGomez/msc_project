@@ -27,6 +27,8 @@ jobs:
     defaults:
       run:
         shell: bash
+        working-directory: ./terraform
+
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -38,13 +40,10 @@ jobs:
       uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.2.5
-        tf_actions_working_dir: './terraform'
 
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      with:
-        tf_actions_working_dir: './terraform'
       run: |
         export AWS_ACCESS_KEY=$TF_VAR_aws_access_key
         export AWS_SECRET_KEY=$TF_VAR_aws_secret_key
@@ -55,17 +54,13 @@ jobs:
         export TF_VAR_POSTGRES_HOST=$TF_VAR_POSTGRES_HOST
         export TF_VAR_TWITTER_TOKEN=$TF_VAR_TWITTER_TOKEN
         terraform init
-
+      
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
-      with:
-        tf_actions_working_dir: './terraform'
       run: terraform fmt -check
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      with:
-        tf_actions_working_dir: './terraform'
       run: |
         export AWS_ACCESS_KEY=$TF_VAR_aws_access_key
         export AWS_SECRET_KEY=$TF_VAR_aws_secret_key
@@ -79,8 +74,6 @@ jobs:
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
     - name: Terraform Apply
-      with:
-        tf_actions_working_dir: './terraform'
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
         export AWS_ACCESS_KEY=$TF_VAR_aws_access_key
